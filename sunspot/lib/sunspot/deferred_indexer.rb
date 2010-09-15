@@ -61,7 +61,7 @@ module Sunspot
     #
     def remove_all(clazz = nil)
       if clazz
-        Resque.enqueue(DeferredIndexers::DeferredIndexerDeleteByQuery, "type:#{escape(claszz.name)}")
+        Resque.enqueue(DeferredIndexers::DeferredIndexerDeleteByQuery, "type:#{escape(clazz.name)}")
         #@connection.delete_by_query("type:#{escape(clazz.name)}")
       else
         Resque.enqueue(DeferredIndexers::DeferredIndexerDeleteByQuery, "*:*")
