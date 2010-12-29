@@ -104,7 +104,7 @@ module Sunspot
     #
     def commit
       @adds = @deletes = 0
-      connection.commit
+      Resque.enqueue(Sunspot::DeferredIndexers::DeferredIndexerCommitIndex, "")
     end
 
     #
@@ -243,7 +243,7 @@ module Sunspot
     end
 
     def indexer
-      @indexer ||= Indexer.new(connection)
+      @indexer ||= ::Sunspot::DeferredIndexer.new(connection)
     end
 
     def setup_for_types(types)
